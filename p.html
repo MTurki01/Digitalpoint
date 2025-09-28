@@ -1,0 +1,93 @@
+<html>
+<head>
+ 
+  <title>All Products</title>
+  <link rel="stylesheet" href="C.CSS">
+</head>
+<body>
+
+  
+  <nav>
+    <div class="logo">🛍️ Digitalpoint</div>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="p.html">المنتجات</a></li>
+      <li><a href="cr.html">🛒 السلة (<span id="cart-count">0</span>)</a></li>
+      <li><a href="index.html#contact">تواصل</a></li>
+    </ul>
+  </nav>
+
+
+  <section class="products">
+    <h2> Phones📲 </h2>
+    <div class="gallery">
+      <div class="card">
+        <img src="15.JPG">
+        <p>iPHONE 15 - 500$</p>
+        <button onclick="addToCart('iPHONE15', 500)">إضافة إلى السلة</button>
+      </div>
+     <div class="card">
+        <img src="15PRO.JPG">
+        <p>iPHONE 15PROMAX - 1000$</p>
+        <button onclick="addToCart('iPHONE15PROMAX', 1000)">إضافة إلى السلة</button>
+      </div>
+      <div class="card">
+        <img src="16.jpg">
+        <p>iPHONE 16 - 800$</p>
+        <button onclick="addToCart('iPHONE16', 800)">إضافة إلى السلة</button>
+      </div>
+      <div class="card">
+        <img src="5.jpg">
+        <p>iPHONE 16 PROMAX - 1100$</p>
+        <button onclick="addToCart('iPHONE16PROMAX', 1100)">إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <h2>Electron accessories 🎧</h2>
+    <div class="gallery">
+      <div class="card">
+        <img src="6.JPG">
+        <p>Power bank - 50$</p>
+        <button onclick="addToCart('Power bank', 50)">إضافة إلى السلة</button>
+      </div>
+      <div class="card">
+        <img src="2.jpeg">
+        <p>Charging cable - 35$</p>
+        <button onclick="addToCart('Charging cable', 35)">إضافة إلى السلة</button>
+      </div>
+      <div class="card">
+        <img src="R.jpeg">
+        <p>Power bank - 60$</p>
+        <button onclick="addToCart('Power bank', 60)">إضافة إلى السلة</button>
+      </div>
+      <div class="card">
+        <img src="Wireless-Charger.JPG">
+        <p>Wireless Charger - 80$</p>
+        <button onclick="addToCart('Wireless Charger', 80)">إضافة إلى السلة</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Digitalpoint - جميع الحقوق محفوظة</p>
+  </footer>
+
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert(product + " تمت إضافته إلى السلة ✅");
+    }
+
+    function updateCartCount() {
+      document.getElementById("cart-count").innerText = cart.length;
+    }
+
+    updateCartCount();
+  </script>
+</body>
+</html>

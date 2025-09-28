@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="C.CSS">
+</head>
+<body>
+
+
+  <nav>
+    <div class="logo">🛍️ Digitalpoint</div>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="p.html">المنتجات</a></li>
+      <li><a href="cr.html">🛒 السلة (<span id="cart-count">0</span>)</a></li>
+      <li><a href="index.html#contact">تواصل</a></li>
+    </ul>
+  </nav>
+
+  <section class="products">
+    <h2>🛒 سلة التسوق</h2>
+    <div id="cart-items"></div>
+    <h3 id="total"></h3>
+    <h3>لتاكيد الطلب ادخل بياناتك</h3>
+    <form id="formre">
+        <input type="text" placeholder="اسمك" required><BR>
+        <input type="email" placeholder="بريدك الإلكتروني" required><br>
+        <textarea placeholder="عنوانك"></textarea><BR>
+        <button type="submit">إرسال</button></form>
+    <button onclick="clearCart()">إفراغ السلة</button>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Digitalpoint - جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function displayCart() {
+      let container = document.getElementById("cart-items");
+      let total = 0;
+      container.innerHTML = "";
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>السلة فارغة 🛒</p>";
+      } else {
+        cart.forEach((item, index) => {
+          container.innerHTML += `
+            <p>${item.product} -${item.price}$ 
+            <button onclick="removeItem(${index})"> حذف</button></p>
+          `;
+          total += item.price;
+        });
+        document.getElementById("total").innerText = "الإجمالي: "+ "$"+ total  ;
+      }
+      updateCartCount();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      displayCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      displayCart();
+    }
+
+    function updateCartCount() {
+      document.getElementById("cart-count").innerText = cart.length;
+    }
+
+    displayCart();
+  </script>
+</body>
+</html>
