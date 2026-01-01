@@ -1,60 +1,286 @@
-<html >
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <title>Digitalpoint</title>
-  <link rel="stylesheet" href="C.CSS">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EbaaStore</title>
+<style>
+/* الألوان المختارة */
+:root {
+  --dark-purple: #6C4370;
+  --medium-purple: #87588A;
+  --light-purple: #9F6D99;
+  --pink-purple: #B78AA7;
+  --light-pink: #E0C9C9;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin:0;
+  background: var(--light-pink);
+}
+header {
+  background: var(--dark-purple);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-size: 24px;
+  font-weight: bold;
+}
+#categoryFilter {
+  margin: 20px;
+  text-align: center;
+}
+#categoryFilter button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: none;
+  background: var(--medium-purple);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#categoryFilter button:hover { background: var(--light-purple); }
+#products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 20px 40px 20px;
+}
+.product {
+  border-radius: 15px;
+  background: var(--pink-purple);
+  width: 230px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+.product:hover { transform: translateY(-5px); }
+.product img { width: 100%; border-radius: 15px; cursor: pointer; }
+
+button {
+  background: var(--medium-purple);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.3s;
+}
+button:hover { background: var(--light-purple); }
+
+#cartSidebar {
+  position: fixed;
+  top: 0;
+  right: -370px;
+  width: 370px;
+  height: 100%;
+  background: var(--pink-purple);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  padding: 20px;
+  overflow-y: auto;
+  transition: right 0.3s;
+  z-index: 200;
+  border-radius: 0 0 0 20px;
+}
+#cartSidebar.open { right: 0; }
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  background: var(--light-pink);
+  padding: 8px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+.cart-item input {
+  width: 50px;
+  margin: 0 5px;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid var(--medium-purple);
+}
+.overlay {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.3);
+  display:none;
+  z-index:100;
+}
+.overlay.show { display:block; }
+
+#previewModal {
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  background:#fff;
+  padding:15px;
+  border-radius:15px;
+  z-index:300;
+  max-width:80%;
+  max-height:80%;
+}
+#previewModal img {
+  width:100%;
+  height:auto;
+  border-radius:15px;
+}
+#previewModal h3, #previewModal p { color: var(--dark-purple); text-align:right; }
+
+#cartSidebar h2, #cartSidebar h3 { color: var(--light-purple); text-align:right; }
+#cartSidebar input, #cartSidebar textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 10px 0;
+  border-radius: 8px;
+  border: 1px solid var(--medium-purple);
+}
+#cartSidebar button {
+  width: 100%;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">🛍️ Digitalpoint</div>
-     
-    <ul>
-      <li><a href="index.html">الرئيسية</a></li>
-      <li><a href="p.html">المنتجات</a></li>
-      <li><a href="cr.html">🛒 السلة</a></li>
-      <li><a href="#contact">تواصل</a></li>
-    </ul>
-  </nav>
+<header>EbaaStore</header>
 
-  
-  <section class="about">
-    <h1>Welcome to the Digitalpoint store </h1>
-    <p>We provide you with the best products at the best prices with fast and secure delivery service.</p>
-  </section>
+<div id="categoryFilter">
+  <button onclick="filterCategory('All')">كل الفئات</button>
+  <button onclick="filterCategory('Clothes')">ملابس</button>
+  <button onclick="filterCategory('Accessories')">إكسسوارات</button>
+</div>
 
+<div id="products"></div>
 
-  <section class="products">
-    <h2><a href="p.html">Latest Products  </a></h2>
-    <div class="gallery">
-      <div class="card"><img src="2.jpeg"><p> Charging cable</p></div>
-      <div class="card"><img src="1.jpg"> <p> MagSafe </p></div>
-      <div class="card"><img src="3.jpeg"><p> Charging cable</p></div>
-      <div class="card"><img src="4.jpg"> <p> Powerbank</p></div>
-      <div class="card"><img src="5.jpg"> <p> iPHONE16PROMAX</p></div>
-      <div class="card"><img src="6.jpg"> <p> Powerbank MagSafe </p></div>
-    </div>
-  </section>
+<div class="overlay" id="overlay" onclick="closePreview()"></div>
+<div id="previewModal">
+  <img id="previewImg">
+  <h3 id="previewName"></h3>
+  <p id="previewDesc"></p>
+  <p id="previewPrice"></p>
+  <button id="previewAddBtn">أضف إلى السلة</button>
+</div>
 
-  <section id="contact" class="contact">
-    <h2>Contact us </h2>
-    <form>
-      <input type="text" placeholder="اسمك" required>
-      <input type="email" placeholder="بريدك الإلكتروني" required>
-      <textarea placeholder="رسالتك"></textarea>
-      <button type="submit">إرسال</button>
-    </form>
-  </section>
+<div id="cartSidebar">
+  <h2>السلة</h2>
+  <div id="cart"></div>
+  <p>الإجمالي: $<span id="total">0</span></p>
+  <div>
+    <h3>بيانات الزبون</h3>
+    <input type="text" id="name" placeholder="الاسم الكامل">
+    <input type="text" id="phone" placeholder="رقم الهاتف">
+    <textarea id="address" placeholder="العنوان"></textarea>
+    <button onclick="submitOrder()">تأكيد الطلب</button>
+  </div>
+</div>
 
-  <footer>
-    <p>
-    
-     <a href="https://wa.me/218910859598" target="_blank">WhatsApp</a> |
-     <a href="https://www.facebook.com/share/16CVnUdhj2/?mibextid=wwXIfr" target="_blank">facebook</a> |
-     <a href="https://www.instagram.com/mohammed_turki01?igsh=amh3bDh0ZHRlam8w&utm_source=qr" target="_blank">instagram</a>
-  </p>
-    <p>&copy; 2025 Digitalpoint - جميع الحقوق محفوظة</p>
-  </footer>
+<script>
+const apiURL = "https://script.google.com/macros/s/AKfycbxs-uo5fdLjZiVyZoJXW01cHF9FSgKmaSUgSt6_EgAPqNkNmT5pPctsI5hQzXUHDZsEUQ/exec"; // ضع رابط Web App هنا
+let productsList = [];
+let filteredProducts = [];
+let cart = [];
 
+// جلب المنتجات
+fetch(apiURL)
+  .then(res => res.json())
+  .then(products => { productsList = products; filteredProducts = products; renderProducts(); });
+
+// عرض المنتجات
+function renderProducts() {
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+  filteredProducts.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+      <img src="${p.image}" alt="${p.name}" onclick="previewProduct(${p.id})">
+      <h3>${p.name}</h3>
+      <p>السعر: $${p.price}</p>
+      <button onclick="addToCart(${p.id})">أضف إلى السلة</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// فلترة الفئات
+function filterCategory(cat) {
+  filteredProducts = (cat==='All')? productsList : productsList.filter(p=>p.category===cat);
+  renderProducts();
+}
+
+// معاينة المنتج في نافذة منبثقة
+function previewProduct(id){
+  const product = productsList.find(p=>p.id===id);
+  if(!product) return;
+  document.getElementById('previewImg').src = product.image;
+  document.getElementById('previewName').innerText = product.name;
+  document.getElementById('previewDesc').innerText = product.description;
+  document.getElementById('previewPrice').innerText = 'السعر: $'+product.price;
+  document.getElementById('previewAddBtn').onclick = ()=>{ addToCart(id); closePreview(); };
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('previewModal').style.display='block';
+}
+function closePreview(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('previewModal').style.display='none';
+}
+
+// السلة
+function addToCart(id){
+  const product = productsList.find(p=>p.id===id);
+  if(!product||product.quantity<=0){alert('المنتج غير متوفر'); return;}
+  const cartItem = cart.find(c=>c.id===id);
+  if(cartItem){if(cartItem.quantity<product.quantity) cartItem.quantity++; else alert('وصلت للحد الأقصى');}
+  else cart.push({...product, quantity:1});
+  renderCart(); openCart();
+}
+
+function removeFromCart(id){cart=cart.filter(i=>i.id!==id); renderCart();}
+function updateQuantity(id,qty){const cartItem=cart.find(c=>c.id===id); const product=productsList.find(p=>p.id===id); if(!cartItem||!product) return; if(qty<1) cartItem.quantity=1; else if(qty>product.quantity) cartItem.quantity=product.quantity; else cartItem.quantity=qty; renderCart();}
+
+function renderCart(){
+  const cartDiv=document.getElementById('cart');
+  cartDiv.innerHTML=cart.map(i=>`<div class="cart-item">
+    <span>${i.name} - $${i.price} x <input type="number" value="${i.quantity}" min="1" max="${i.quantity+10}" onchange="updateQuantity(${i.id}, this.value)"></span>
+    <button onclick="removeFromCart(${i.id})">حذف</button>
+  </div>`).join('');
+  const total=cart.reduce((sum,i)=>sum+i.price*i.quantity,0);
+  document.getElementById('total').innerText=total;
+}
+
+function toggleCart(){document.getElementById('cartSidebar').classList.toggle('open');}
+function openCart(){document.getElementById('cartSidebar').classList.add('open');}
+
+function submitOrder(){
+  if(!cart.length){alert('السلة فارغة!'); return;}
+  const name=document.getElementById('name').value; const phone=document.getElementById('phone').value; const address=document.getElementById('address').value;
+  if(!name||!phone||!address){alert('يرجى تعبئة جميع البيانات'); return;}
+  fetch(apiURL,{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({
+    name, phone, address, cart: cart.map(c=>({id:c.id, quantity:c.quantity})), total: cart.reduce((sum,c)=>sum+c.price*c.quantity,0)
+  })}).then(res=>res.json()).then(data=>{
+    if(data.status==='success'){ alert('تم تسجيل الطلب بنجاح!'); cart=[]; renderCart(); document.getElementById('name').value=''; document.getElementById('phone').value=''; document.getElementById('address').value=''; location.reload();}
+    else alert(data.message||'حدث خطأ حاول مرة أخرى');
+  });
+}
+</script>
 </body>
 </html>
+
+
 
