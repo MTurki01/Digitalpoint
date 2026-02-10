@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - متجري الإلكتروني</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🛍️ متجري</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="products.html">المنتجات</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="contact.html">اتصل بنا</a></li>
+                <li><a href="login.html">تسجيل الدخول</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="ابحث عن منتجات...">
+                <button onclick="window.location.href='products.html'">🔍</button>
+            </div>
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="hero" style="padding: 3rem 2rem;">
+        <h1>اتصل بنا</h1>
+        <p>نحن هنا للإجابة على جميع استفساراتك</p>
+    </div>
+
+    <!-- Contact Content -->
+    <div class="container">
+        <div class="checkout-grid">
+            <!-- Contact Form -->
+            <div>
+                <div class="form-container" style="margin: 0; max-width: 100%;">
+                    <h2>أرسل لنا رسالة</h2>
+                    
+                    <form onsubmit="handleContact(event)">
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" required placeholder="أدخل اسمك الكامل">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" required placeholder="example@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>رقم الهاتف</label>
+                            <input type="tel" placeholder="05xxxxxxxx">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الموضوع</label>
+                            <select required>
+                                <option value="">اختر موضوع الرسالة</option>
+                                <option value="inquiry">استفسار عام</option>
+                                <option value="order">استفسار عن طلب</option>
+                                <option value="support">دعم فني</option>
+                                <option value="complaint">شكوى</option>
+                                <option value="suggestion">اقتراح</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الرسالة</label>
+                            <textarea required placeholder="اكتب رسالتك هنا..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <div class="checkout-section">
+                    <h3>معلومات التواصل</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--light-red); margin-bottom: 0.5rem;">📧 البريد الإلكتروني</h4>
+                        <p style="color: #ccc;">info@mystore.com</p>
+                        <p style="color: #ccc;">support@mystore.com</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--light-red); margin-bottom: 0.5rem;">📱 الهاتف</h4>
+                        <p style="color: #ccc;">+966 50 123 4567</p>
+                        <p style="color: #ccc;">+966 11 234 5678 (خدمة العملاء)</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--light-red); margin-bottom: 0.5rem;">📍 العنوان</h4>
+                        <p style="color: #ccc;">الرياض، حي العليا</p>
+                        <p style="color: #ccc;">المملكة العربية السعودية</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--light-red); margin-bottom: 0.5rem;">⏰ ساعات العمل</h4>
+                        <p style="color: #ccc;">الأحد - الخميس: 9 صباحاً - 6 مساءً</p>
+                        <p style="color: #ccc;">الجمعة - السبت: مغلق</p>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>تابعنا على</h3>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#" class="btn-secondary" style="flex: 1; min-width: 120px; text-align: center;">
+                            📘 Facebook
+                        </a>
+                        <a href="#" class="btn-secondary" style="flex: 1; min-width: 120px; text-align: center;">
+                            📸 Instagram
+                        </a>
+                        <a href="#" class="btn-secondary" style="flex: 1; min-width: 120px; text-align: center;">
+                            🐦 Twitter
+                        </a>
+                        <a href="#" class="btn-secondary" style="flex: 1; min-width: 120px; text-align: center;">
+                            💼 LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <div class="checkout-section" style="background: rgba(139,0,0,0.3);">
+                    <h3>الأسئلة الشائعة</h3>
+                    <p style="color: #ccc; margin-bottom: 1rem;">
+                        هل لديك سؤال؟ قد تجد الإجابة في صفحة الأسئلة الشائعة
+                    </p>
+                    <a href="#" class="btn-secondary" style="width: 100%; text-align: center;">
+                        اذهب للأسئلة الشائعة
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Contact Cards -->
+        <h2 style="text-align: center; color: var(--light-red); font-size: 2.5rem; margin: 4rem 0 2rem;">طرق سريعة للتواصل</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">💬</div>
+                <h3>الدردشة المباشرة</h3>
+                <p>تحدث مع فريق الدعم مباشرة</p>
+                <button class="btn" style="margin-top: 1rem; width: 100%;">ابدأ المحادثة</button>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📞</div>
+                <h3>اتصل بنا</h3>
+                <p>تواصل معنا عبر الهاتف</p>
+                <button class="btn" style="margin-top: 1rem; width: 100%;">اتصل الآن</button>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📧</div>
+                <h3>البريد الإلكتروني</h3>
+                <p>أرسل لنا رسالة عبر البريد</p>
+                <button class="btn" style="margin-top: 1rem; width: 100%;">أرسل رسالة</button>
+            </div>
+            <div class="feature-card">
+                <div class="icon">❓</div>
+                <h3>مركز المساعدة</h3>
+                <p>ابحث في قاعدة المعرفة</p>
+                <button class="btn" style="margin-top: 1rem; width: 100%;">تصفح المقالات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>عن المتجر</h3>
+                <p>متجرك الموثوق للتسوق الإلكتروني بأفضل الأسعار وأعلى جودة</p>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>خدمة العملاء</h3>
+                <ul>
+                    <li><a href="#">سياسة الخصوصية</a></li>
+                    <li><a href="#">الشروط والأحكام</a></li>
+                    <li><a href="#">سياسة الإرجاع</a></li>
+                    <li><a href="#">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <ul>
+                    <li>📧 info@mystore.com</li>
+                    <li>📱 +966 50 123 4567</li>
+                    <li>📍 الرياض، المملكة العربية السعودية</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 متجري الإلكتروني. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification"></div>
+    <script src="js/main.js"></script>
+</body>
+</html>
