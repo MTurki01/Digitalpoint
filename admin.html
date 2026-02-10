@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - إدارة المنتجات</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(145deg, rgba(61,0,0,0.8), rgba(26,0,0,0.9));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .admin-header h1 {
+            color: var(--light-red);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(139,0,0,0.3);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, var(--primary-red), var(--accent-red));
+            border-color: var(--light-red);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .product-form {
+            background: linear-gradient(145deg, rgba(61,0,0,0.8), rgba(26,0,0,0.9));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .features-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .features-input input {
+            flex: 1;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .features-list li {
+            background: rgba(61,0,0,0.5);
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .products-table {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(61,0,0,0.8), rgba(26,0,0,0.9));
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .products-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table th {
+            background: rgba(139,0,0,0.5);
+            padding: 1rem;
+            text-align: right;
+            color: var(--light-red);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .products-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .products-table tr:hover {
+            background: rgba(139,0,0,0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-buttons button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: rgba(0,139,139,0.5);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: rgba(255,0,0,0.5);
+            color: #fff;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            background: rgba(61,0,0,0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(61,0,0,0.8), rgba(26,0,0,0.9));
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: var(--light-red);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .products-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">🛍️ متجري</a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="products.html">المنتجات</a></li>
+                <li><a href="admin.html">لوحة التحكم</a></li>
+            </ul>
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <div class="container admin-container">
+        <div class="admin-header">
+            <h1>🎛️ لوحة التحكم</h1>
+            <p>إدارة المنتجات والمتجر</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3 id="totalProducts">0</h3>
+                <p>إجمالي المنتجات</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="totalCategories">4</h3>
+                <p>الفئات</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="avgPrice">0</h3>
+                <p>متوسط السعر (ريال)</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('add')">➕ إضافة منتج</button>
+            <button class="tab" onclick="switchTab('manage')">📋 إدارة المنتجات</button>
+        </div>
+
+        <!-- Add Product Tab -->
+        <div id="addTab" class="tab-content active">
+            <div class="product-form">
+                <h2 style="color: var(--light-red); margin-bottom: 2rem;">➕ إضافة منتج جديد</h2>
+                <form id="productForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>اسم المنتج *</label>
+                            <input type="text" id="productName" required placeholder="مثال: لابتوب عالي الأداء">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>السعر (ريال) *</label>
+                            <input type="number" id="productPrice" required placeholder="مثال: 3500">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>الفئة *</label>
+                            <select id="productCategory" required>
+                                <option value="">اختر الفئة</option>
+                                <option value="electronics">إلكترونيات</option>
+                                <option value="fashion">أزياء</option>
+                                <option value="home">منزل</option>
+                                <option value="sports">رياضة</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الأيقونة (Emoji)</label>
+                            <input type="text" id="productIcon" placeholder="مثال: 💻">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>التقييم (1-5)</label>
+                            <input type="number" id="productRating" min="1" max="5" step="0.5" value="4.0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الكمية المتوفرة</label>
+                            <input type="number" id="productStock" value="10" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>الوصف *</label>
+                        <textarea id="productDescription" required placeholder="وصف تفصيلي للمنتج" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>رابط الصورة (URL)</label>
+                        <input type="url" id="productImageUrl" placeholder="https://example.com/image.jpg">
+                        <div class="image-preview" id="imagePreview">
+                            <span style="color: #ccc;">معاينة الصورة</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>المميزات والخصائص</label>
+                        <div class="features-input">
+                            <input type="text" id="featureInput" placeholder="أضف ميزة">
+                            <button type="button" class="btn-secondary" onclick="addFeature()">إضافة</button>
+                        </div>
+                        <ul class="features-list" id="featuresList"></ul>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 2rem;">
+                        💾 حفظ المنتج
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Products Tab -->
+        <div id="manageTab" class="tab-content">
+            <div class="products-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الأيقونة</th>
+                            <th>الاسم</th>
+                            <th>الفئة</th>
+                            <th>السعر</th>
+                            <th>التقييم</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 3rem;">جاري التحميل...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2024 متجري الإلكتروني - لوحة التحكم</p>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification"></div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main-firebase.js"></script>
+
+    <script>
+        let currentFeatures = [];
+        let editingProductId = null;
+
+        // معاينة الصورة
+        document.getElementById('productImageUrl').addEventListener('input', function() {
+            const url = this.value;
+            const preview = document.getElementById('imagePreview');
+            
+            if (url) {
+                preview.innerHTML = `<img src="${url}" alt="معاينة" onerror="this.style.display='none'">`;
+            } else {
+                preview.innerHTML = '<span style="color: #ccc;">معاينة الصورة</span>';
+            }
+        });
+
+        // إضافة ميزة
+        function addFeature() {
+            const input = document.getElementById('featureInput');
+            const feature = input.value.trim();
+            
+            if (feature) {
+                currentFeatures.push(feature);
+                input.value = '';
+                updateFeaturesList();
+            }
+        }
+
+        // تحديث قائمة المميزات
+        function updateFeaturesList() {
+            const list = document.getElementById('featuresList');
+            list.innerHTML = currentFeatures.map((feature, index) => `
+                <li>
+                    <span>${feature}</span>
+                    <button type="button" class="btn-delete" onclick="removeFeature(${index})" style="padding: 0.3rem 0.8rem;">حذف</button>
+                </li>
+            `).join('');
+        }
+
+        // حذف ميزة
+        function removeFeature(index) {
+            currentFeatures.splice(index, 1);
+            updateFeaturesList();
+        }
+
+        // التبديل بين التبويبات
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            if (tab === 'add') {
+                document.getElementById('addTab').classList.add('active');
+            } else {
+                document.getElementById('manageTab').classList.add('active');
+                loadProductsTable();
+            }
+        }
+
+        // حفظ المنتج
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const product = {
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value,
+                description: document.getElementById('productDescription').value,
+                icon: document.getElementById('productIcon').value || '📦',
+                rating: parseFloat(document.getElementById('productRating').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                imageUrl: document.getElementById('productImageUrl').value || '',
+                features: currentFeatures
+            };
+            
+            if (editingProductId) {
+                // تحديث منتج موجود
+                await updateProductInFirebase(editingProductId, product);
+                editingProductId = null;
+            } else {
+                // إضافة منتج جديد
+                await addProductToFirebase(product);
+            }
+            
+            // إعادة تعيين النموذج
+            this.reset();
+            currentFeatures = [];
+            updateFeaturesList();
+            document.getElementById('imagePreview').innerHTML = '<span style="color: #ccc;">معاينة الصورة</span>';
+            
+            // تحديث الإحصائيات
+            updateStats();
+        });
+
+        // تحميل جدول المنتجات
+        async function loadProductsTable() {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">جاري التحميل...</td></tr>';
+            
+            const products = await getProductsFromFirebase();
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">لا توجد منتجات</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td style="font-size: 2rem;">${product.icon || '📦'}</td>
+                    <td>${product.name}</td>
+                    <td>${getCategoryName(product.category)}</td>
+                    <td>${product.price} ريال</td>
+                    <td>${'⭐'.repeat(Math.floor(product.rating))}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit" onclick="editProduct('${product.id}')">تعديل</button>
+                            <button class="btn-delete" onclick="deleteProduct('${product.id}')">حذف</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // الحصول على اسم الفئة بالعربي
+        function getCategoryName(category) {
+            const names = {
+                'electronics': 'إلكترونيات',
+                'fashion': 'أزياء',
+                'home': 'منزل',
+                'sports': 'رياضة'
+            };
+            return names[category] || category;
+        }
+
+        // تعديل منتج
+        async function editProduct(productId) {
+            const product = await getProductById(productId);
+            
+            if (!product) {
+                showNotification('⚠️ المنتج غير موجود');
+                return;
+            }
+            
+            // ملء النموذج
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productCategory').value = product.category;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productIcon').value = product.icon || '';
+            document.getElementById('productRating').value = product.rating;
+            document.getElementById('productStock').value = product.stock || 0;
+            document.getElementById('productImageUrl').value = product.imageUrl || '';
+            
+            currentFeatures = product.features || [];
+            updateFeaturesList();
+            
+            editingProductId = productId;
+            
+            // التبديل إلى تبويب الإضافة
+            switchTab('add');
+            document.querySelector('.tab').click();
+            
+            showNotification('يمكنك الآن تعديل المنتج');
+        }
+
+        // حذف منتج
+        async function deleteProduct(productId) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                await deleteProductFromFirebase(productId);
+                loadProductsTable();
+                updateStats();
+            }
+        }
+
+        // تحديث الإحصائيات
+        async function updateStats() {
+            const products = await getProductsFromFirebase();
+            
+            document.getElementById('totalProducts').textContent = products.length;
+            
+            const categories = new Set(products.map(p => p.category));
+            document.getElementById('totalCategories').textContent = categories.size;
+            
+            const avgPrice = products.length > 0 
+                ? (products.reduce((sum, p) => sum + p.price, 0) / products.length).toFixed(0)
+                : 0;
+            document.getElementById('avgPrice').textContent = avgPrice;
+        }
+
+        // التهيئة
+        document.addEventListener('DOMContentLoaded', async function() {
+            updateCartCount();
+            updateStats();
+            
+            // الاستماع للتغييرات
+            listenToProductsChanges((products) => {
+                updateStats();
+                if (document.getElementById('manageTab').classList.contains('active')) {
+                    loadProductsTable();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
